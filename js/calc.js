@@ -47,14 +47,7 @@ function getAmortPayments(period, equipmet) {
  * @param   percent страховые взносы ФЗП (процент 0-100)
  * @returns Сумма текущих затрат без амортизации (тыс.)
  */
-function getSumPaymentWithoutAmort(
-  rent,
-  exploitation,
-  others,
-  materials,
-  ownerSalary,
-  workerSalary,
-  percent) {
+function getSumPaymentWithoutAmort(rent, exploitation, others, materials, ownerSalary, workerSalary, percent) {
   insurancePayment = getInsurancePayment(ownerSalary, workerSalary, percent);
   return +rent + +exploitation + +others + +materials + +ownerSalary + +workerSalary + +insurancePayment;
 }
