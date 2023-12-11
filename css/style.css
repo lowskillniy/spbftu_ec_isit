@@ -6,4 +6,89 @@
 *::before,
 *::after {
   box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  position: relative;
+}
+
+header {
+  position: sticky;
+  display: flex;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;  
+  background: #84c552;
+  height: 50px;
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: auto;
+}
+
+button {
+  margin-bottom: 10px;
+  background: #84c552;
+  border: 0;
+  border-radius: 15px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 10px;
+  transition: .2s ease;
+  width: 200px;
+  will-change: auto;
+}
+
+.inputForm {
+  position: relative;
+  display: flex;
+  margin-bottom: 10px;
+  border-top: 1px solid lightgrey;
+  padding: 10px 0 10px 0;
+}
+
+.getDataSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.dataInput {
+  position: absolute;
+  right: 0;
+  width: 60%;
+}
+
+#calcButton {
+  margin-bottom: 10px;
+  align-self: center;
+}
+
+.installButton {
+  align-self: center;
+}
+
+@media screen and (max-width: 900px) {
+  section {
+    width: 90%;
+  }
+  .inputForm {
+    flex-direction: column;
+  }
+  .dataInput {
+    position: unset;
+    width: 100%;
+    margin-top: 5px;
+  }
 }

@@ -1,16 +1,99 @@
 <!DOCTYPE html>
-<html lang = "ru">
-  <head>
-    <title>Калькулятор для расчетной работы по экономике для студентов кафедры ИСиТ</title>
-    <meta charset = "UTF-8">
-    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
-    <link rel = "manifest" href = "/manifest.webmanifest" />
-    <link rel = "stylesheet" href = "/css/style.css">
-    <script src = "/js/app.js"></script>
-    <script src = "/js/calc.js"></script>
-  </head>
-  <body>
-    <div>Hello, world!</div>
-    <div><button id = 'button-install' hidden = 'true'>Install</button></div>
-  </body>
+<html lang="ru">
+
+<head>
+   <title>Калькулятор для расчетной работы по экономике для студентов кафедры ИСиТ</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="/css/style.css">
+   <link rel="manifest" href="/manifest.webmanifest" />
+</head>
+
+<body>
+   <header>
+      <p>Задание расчётной работы</p>
+   </header>
+   <section>
+      <button id='button-install' class="installButton" hidden='true'>Install</button>
+      <div class="getDataSection">
+         <form class="inputForm">
+            <label for="investmentSize">Объём инвестиций</label>
+            <input class="dataInput" type="text" id="investmentSize" pattern="\d+([,\.]\d{1,})?" />
+         </form>
+         <form class="inputForm">
+            <label for="equipmentServiceLife">Срок эксплуатации оборудования (лет)</label>
+            <input class="dataInput" type="text" id="equipmentServiceLife" pattern="\d+([,\.]\d{1,})?" value="5" />
+         </form>
+         <form class="inputForm">
+            <label for="workingTime">Рабочее время (часов)</label>
+            <input class="dataInput" type="text" id="workingTime" pattern="\d+([,\.]\d{1,})?" value="8" />
+         </form>
+         <form class="inputForm">
+            <label for="numberOfWorkingDays">Количество рабочих дней</label>
+            <input class="dataInput" type="text" id="numberOfWorkingDays" pattern="\d+([,\.]\d{1,})?" value="22" />
+         </form>
+         <form class="inputForm">
+            <label for="plannedAmountWork">Планируемый объём работ (тыс. рублей)</label>
+            <input class="dataInput" type="text" id="plannedAmountWork" pattern="\d+([,\.]\d{1,})?" value="7" />
+         </form>
+         <form class="inputForm">
+            <label for="rent">Аренда</label>
+            <input class="dataInput" type="text" id="rent" pattern="\d+([,\.]\d{1,})?" />
+         </form>
+         <form class="inputForm">
+            <label for="operatingСosts">Эксплуатационые расходы </label>
+            <input class="dataInput" type="text" id="operatingСosts" pattern="\d+([,\.]\d{1,})?" />
+         </form>
+         <form class="inputForm">
+            <label for="businessmanSalary">Зарплата бизнесмена</label>
+            <input class="dataInput" type="text" id="businessmanSalary" pattern="\d+([,\.]\d{1,})?" />
+         </form>
+         <form class="inputForm">
+            <label for="workerSalary">Зарплата рабочего</label>
+            <input class="dataInput" type="text" id="workerSalary" pattern="\d+([,\.]\d{1,})?" />
+         </form>
+         <form class="inputForm">
+            <label for="salaryInsuranceContributions">Страховые взносы на зарплату</label>
+            <input class="dataInput" type="text" id="salaryInsuranceContributions" pattern="\d+([,\.]\d{1,})?" />
+         </form>
+         <form class="inputForm">
+            <label for="materials">Материалы</label>
+            <input class="dataInput" type="text" id="materials" pattern="\d+([,\.]\d{1,})?" />
+         </form>
+         <form class="inputForm">
+            <label for="otherCosts">Прочие затраты</label>
+            <input class="dataInput" type="text" id="otherCosts" pattern="\d+([,\.]\d{1,})?" />
+         </form>
+         <form class="inputForm">
+            <label for="loanPercentage">Процент годовых по кредиту</label>
+            <input class="dataInput" type="text" id="loanPercentage" pattern="\d+([,\.]\d{1,})?" />
+         </form>
+         <form class="inputForm">
+            <label for="shareOfOwnFunds">Уд. вес собственных средств</label>
+            <input class="dataInput" type="text" id="shareOfOwnFunds" pattern="\d+([,\.]\d{1,})?" />
+         </form>
+         <form class="inputForm">
+            <label for="loanRepaymentPeriod">Срок погашения кредита</label>
+            <input class="dataInput" type="text" id="loanRepaymentPeriod" pattern="\d+([,\.]\d{1,})?" />
+         </form>
+         <!-- /*выпадающий список* -->
+         <form class="inputForm">
+            <label for="interestPayment">Выплата процентов</label>
+            <input class="dataInput" type="text" id="interestPayment" value="Ежеквартально равными долями"
+               disabled="true" />
+         </form>
+         <!-- /*выпадающий список* -->
+         <form class="inputForm">
+            <label for="loanRepayment">Погашение кредита</label>
+            <input class="dataInput" type="text" id="loanRepayment"
+               value="Равными долями, начиная со 2 квартала деятельности" disabled="true" />
+         </form>
+      </div>
+      <button id="calcButton">Рассчитать значения</button>
+   </section>
+
+</body>
+<script src="/js/app.js"></script>
+<script src="/js/calc.js"></script>
+
 </html>
