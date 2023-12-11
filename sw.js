@@ -1,15 +1,39 @@
-const staticCacheName = 's-ecpred-isit';
-const dynamicCacheName = 'd-ecpred-isit';
+const cacheName = 'cache-ecpred-isit';
 
 const assetUrls = [
+  '/',
   '/index.html',
   '/js/app.js',
   '/js/calc.js',
-  '/css/style.css'
+  '/css/style.css',
+  '/favicon.ico',
+  '/manifest.webmanifest',
+  '/res/ico/android/android-launchericon-72-72.png',
+  '/res/ico/android/android-launchericon-144-144.png',
+  '/res/ico/android/android-launchericon-192-192.png',
+  '/res/ico/android/android-launchericon-512-512.png',
+  '/res/ico/ios/16.png',
+  '/res/ico/ios/32.png',
+  '/res/ico/ios/58.png',
+  '/res/ico/ios/64.png',
+  '/res/ico/ios/76.png',
+  '/res/ico/ios/80.png',
+  '/res/ico/ios/87.png',
+  '/res/ico/ios/114.png',
+  '/res/ico/ios/120.png',
+  '/res/ico/ios/128.png',
+  '/res/ico/ios/144.png',
+  '/res/ico/ios/152.png',
+  '/res/ico/ios/167.png',
+  '/res/ico/ios/180.png',
+  '/res/ico/ios/192.png',
+  '/res/ico/ios/256.png',
+  '/res/ico/ios/512.png',
+  '/res/ico/ios/1024.png'
 ];
 
 self.addEventListener('install', async event => {
-  const cache = await caches.open(staticCacheName);
+  const cache = await caches.open(cacheName);
   await cache.addAll(assetUrls);
 });
 
@@ -17,35 +41,19 @@ self.addEventListener('activate', async event => {
   const cacheNames = await caches.keys();
   await Promise.all(
     cacheNames
-      .filter(name => name !== staticCacheName)
-      .filter(name => name !== dynamicCacheName)
+      .filter(name => name !== cacheName)
       .map(name => caches.delete(name))
   )
+}); 
+
+self.addEventListener('fetch', event => {
+  event.respondWith(caches.open(cacheName).then(async cache => {
+    try {
+      const fetchedResponse = await fetch(event.request.url);
+      cache.put(event.request, fetchedResponse.clone());
+      return fetchedResponse;
+    } catch {
+      return await cache.match(event.request.url);
+    }
+  }));
 });
-
-self.addEventListener("fetch", (event) => {
-  const {request} = event;
-  const url = new URL(request.url);
-  if (url.origin === location.origin) {
-    event.respondWith(staticCacheFetch(request));
-  } else {
-    event.respondWith(dynamicCacheFetch(request));
-  }
-});
-
-async function staticCacheFetch(request) {
-  const cached = await caches.match(request);
-  return cached ?? await fetch(request);
-}
-
-async function dynamicCacheFetch(request) {
-  const cache = await caches.open(dynamicCacheName);
-  try {
-    const response = await fetch(request);
-    await cache.put(request, response.clone());
-    return response;
-  } catch (e) {
-    const cached = await cache.match(request);
-    return cached ?? undefined;
-  }
-}
