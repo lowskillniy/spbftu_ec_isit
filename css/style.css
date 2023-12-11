@@ -1,7 +1,7 @@
 :root {
   box-sizing: border-box;
 }
-
+/*  */
 *,
 *::before,
 *::after {
@@ -21,7 +21,7 @@ header {
   left: 0;
   right: 0;
   text-align: center;  
-  background: #84c552;
+  background: #87ca55;
   height: 50px;
   margin-bottom: 10px;
   align-items: center;
