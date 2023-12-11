@@ -9,13 +9,13 @@ function getQ(hours, days, perHourCost) {
 }
 
 /**
- * @param   equipmet приобретение оборудования
- * @param   capital первоначальные оборотные средства
- * @param   ownerCapital собственные средства предпринимателя
+ * @param   equipmet приобретение оборудования (тыс.)
+ * @param   capital первоначальные оборотные средства (тыс.)
+ * @param   ownerCapital собственные средства предпринимателя (тыс.)
  * @returns Сумма, которую необходимо взять в кредит
  */
 function getCreditSum(equipmet, capital, ownerCapital) {
-  return +equipmet + +capital - +ownerCapital
+  return +equipmet * 1000 + +capital * 1000 - +ownerCapital * 1000
 }
 
 /**
