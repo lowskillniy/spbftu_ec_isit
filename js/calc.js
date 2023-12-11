@@ -90,3 +90,42 @@ function getSumCreditRefund(period, equipmet, capital, ownerCapital) {
 }
 
 //#endregion
+
+//#region Расчет налога при объекте «доход»
+
+/**
+ * @param   hours кол-во рабочих часов в сутках
+ * @param   days кол-во рабочих дней
+ * @param   perHourCost стоимость одного часа работы
+ * @param   percent вроде клюевая ставка цб (0 - 100)
+ * @returns Начальная сумма налога (тыс/квартал)
+ */
+function getInitialTax(hours, days, perHourCost, percent) {
+  return getQ(hours, days, perHourCost) * percent / 100 * 3;
+}
+
+/**
+ * @param   ownerSalary заработная плата бизнесмена (тыс.)
+ * @param   workerSalary заработная плата работника (тыс.)
+ * @param   percent страховые взносы ФЗП (процент 0-100)
+ * @param   hours кол-во рабочих часов в сутках
+ * @param   days кол-во рабочих дней
+ * @param   perHourCost стоимость одного часа работы
+ * @param   percentCB вроде клюевая ставка цб (0 - 100)
+ * @returns Уменьшенная сумма налога (тыс/квартал)
+ */
+function getTaxDecreased(ownerSalary, workerSalary, percent, hours, days, perHourCost, percentCB) {
+  insurancePayment = getInsurancePayment(ownerSalary, workerSalary, percent);
+  initialTax = getInitialTax(hours, days, perHourCost, percent);
+
+  halfTax = initialTax / 2;
+  result = initialTax - insurancePayment;
+
+  if (result > halfTax) {
+    result = halfTax;
+  }
+
+  return result;
+}
+
+//#endregion
