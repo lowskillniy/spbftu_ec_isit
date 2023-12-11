@@ -36,3 +36,25 @@ function getInsurancePayment(ownerSalary, workerSalary, percent) {
 function getAmortPayments(period, equipmet) {
   return equipmet * 1000 / (period * 12)
 }
+
+/**
+ * @param   rent аренда помещения (тыс.)
+ * @param   exploitation экспуатационные затраты (тыс.)
+ * @param   others прочие затраты (тыс.)
+ * @param   materials стоимость материалов (тыс.)
+ * @param   ownerSalary заработная плата бизнесмена (тыс.)
+ * @param   workerSalary стоимость приобретенного оборудования (тыс.)
+ * @param   percent страховые взносы ФЗП (процент 0-100)
+ * @returns Сумма текущих затрат без амортизации (тыс.)
+ */
+function getSumPaymentWithoutAmort(
+  rent,
+  exploitation,
+  others,
+  materials,
+  ownerSalary,
+  workerSalary,
+  percent) {
+  insurancePayment = getInsurancePayment(ownerSalary, workerSalary, percent);
+  return +rent + +exploitation + +others + +materials + +ownerSalary + +workerSalary + +insurancePayment;
+}
