@@ -28,8 +28,24 @@ let getDataForCalc = () => {
   })
 }
 
-getDataForCalc()
+let accordeionsAction = () => {
+  let arrayOfAccordions = [...document.querySelectorAll(".accordionDiv")]
+  arrayOfAccordions.forEach(element => {
+    element.addEventListener('click', elem => {
+      elem.target.classList.toggle("active");
+        let panel = elem.target.nextElementSibling;
+        if (panel.style.maxHeight){
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+    })
+  });
+}
 
+getDataForCalc()
+accordeionsAction()
+//#region Андреевские приколы 
 /**
  * @param   equipmet приобретение оборудования (тыс.)
  * @param   capital первоначальные оборотные средства (тыс.)
@@ -178,4 +194,5 @@ function getTaxDecreased(ownerSalary, workerSalary, percent, hours, days, perHou
 
 
 
+//#endregion
 //#endregion

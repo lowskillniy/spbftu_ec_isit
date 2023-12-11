@@ -11,10 +11,14 @@
 
 <body>
    <header>
-      <p>Задание расчётной работы</p>
+      <p>ЗАДАНИЕ РАСЧЁТНОЙ РАБОТЫ</p>
    </header>
    <section>
-      <button id='button-install' class="installButton" hidden='true'>Install</button>
+      <div class="mainButtons">
+         <button id='button-install' class="installButton" hidden='true'>Install</button>
+         <button id="calcButton">Рассчитать значения</button>
+      </div>
+      <button id="controlGetDataSection" class="accordionDiv">Поля ввода данных</button>
       <div class="getDataSection">
          <form class="inputForm">
             <label for="investmentSize">Объём инвестиций</label>
@@ -22,6 +26,10 @@
          </form>
          <form class="inputForm">
             <label for="equipmentServiceLife">Срок эксплуатации оборудования (лет)</label>
+            <input class="dataInput" type="text" id="equipmentServiceLife" pattern="\d+([,\.]\d{1,})?" value="5" />
+         </form>
+         <form class="inputForm">
+            <label for="equipmentServiceLife">Стоимость одного часа</label>
             <input class="dataInput" type="text" id="equipmentServiceLife" pattern="\d+([,\.]\d{1,})?" value="5" />
          </form>
          <form class="inputForm">
@@ -69,7 +77,7 @@
             <input class="dataInput" type="text" id="loanPercentage" pattern="\d+([,\.]\d{1,})?" />
          </form>
          <form class="inputForm">
-            <label for="shareOfOwnFunds">Уд. вес собственных средств</label>
+            <label for="shareOfOwnFunds">Уд. вес собственных средств, %</label>
             <input class="dataInput" type="text" id="shareOfOwnFunds" pattern="\d+([,\.]\d{1,})?" />
          </form>
          <form class="inputForm">
@@ -90,7 +98,6 @@
          </form>
       </div>
       <!-- тут будет раздел с результатами вычислений-->
-      <button id="calcButton">Рассчитать значения</button>
    </section>
 
 </body>
