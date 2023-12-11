@@ -1,7 +1,7 @@
 /**
  * @param   hours кол-во рабочих часов в сутках
  * @param   days кол-во рабочих дней
- * @param   hours стоимость одного часа работы
+ * @param   perHourCost стоимость одного часа работы
  * @returns Объём услуг Q
  */
 function getQ(hours, days, perHourCost) {
@@ -51,3 +51,42 @@ function getSumPaymentWithoutAmort(rent, exploitation, others, materials, ownerS
   insurancePayment = getInsurancePayment(ownerSalary, workerSalary, percent);
   return +rent + +exploitation + +others + +materials + +ownerSalary + +workerSalary + +insurancePayment;
 }
+
+
+//#region Сумма погашения кредита
+
+/**
+ * @param   period срок под который был взят кредит (мес.)
+ * @returns Сумма возврата кредита (тыс.)
+ */
+function getQuarters(period) {
+  return period / 3;
+}
+
+/**
+ * @param   period срок под который был взят кредит (мес.)
+ * @param   percent процент под который был взят кредит (0 - 100)
+ * @param   equipmet приобретение оборудования (тыс.)
+ * @param   capital первоначальные оборотные средства (тыс.)
+ * @param   ownerCapital собственные средства предпринимателя (тыс.)
+ * @returns Сумма процента за кредит (тыс.)
+ */
+function getSumPercentPerQuarter(period, percent, equipmet, capital, ownerCapital) {
+  creditSum = getCreditSum(equipmet, capital, ownerCapital);
+  quarter = getQuarters(period)
+  return creditSum * (percent / 100) * (period / 12) / quarter;
+}
+
+/**
+ * @param   period срок под который был взят кредит (мес.)
+ * @param   equipmet приобретение оборудования (тыс.)
+ * @param   capital первоначальные оборотные средства (тыс.)
+ * @param   ownerCapital собственные средства предпринимателя (тыс.)
+ * @returns Сумма возврата кредита (тыс.)
+ */
+function getSumCreditRefund(period, equipmet, capital, ownerCapital) {
+  quarter = getQuarters(period)
+  return getQ(equipmet, capital, ownerCapital) / quarter;
+}
+
+//#endregion
