@@ -52,7 +52,29 @@ function getSumPaymentWithoutAmort(rent, exploitation, others, materials, ownerS
   return +rent + +exploitation + +others + +materials + +ownerSalary + +workerSalary + +insurancePayment;
 }
 
+/**
+ * @param   rent аренда помещения (тыс.)
+ * @param   exploitation экспуатационные затраты (тыс.)
+ * @param   others прочие затраты (тыс.)
+ * @param   materials стоимость материалов (тыс.)
+ * @param   ownerSalary заработная плата бизнесмена (тыс.)
+ * @param   workerSalary стоимость приобретенного оборудования (тыс.)
+ * @param   percent страховые взносы ФЗП (процент 0-100)
+ * @param   period амотризационный период оборудования (года)
+ * @param   equipmet стоимость приобретенного оборудования (тыс.)
+ * @param   periodCred срок под который был взят кредит (мес.)
+ * @param   percentCred процент под который был взят кредит (0 - 100)
+ * @param   capital первоначальные оборотные средства (тыс.)
+ * @param   ownerCapital собственные средства предпринимателя (тыс.)
+ * @returns Общая сумма затрат (тыс.)
+ */
+function getSumPaymentWithAmort(rent, exploitation, others, materials, ownerSalary, workerSalary, percent, period, equipmet, periodCred, percentCred, capital, ownerCapital) {
+  sumPayment = getSumPaymentWithoutAmort(rent, exploitation, others, materials, ownerSalary, workerSalary, percent);
+  amortPayment = getAmortPayments(period, equipmet);
+  sumPercent = getSumPercentPerQuarter(periodCred, percentCred, equipmet, capital, ownerCapital)
 
+  return sumPayment + amortPayment + sumPercent
+}
 //#region Сумма погашения кредита
 
 /**
@@ -66,7 +88,7 @@ function getQuarters(period) {
 /**
  * @param   period срок под который был взят кредит (мес.)
  * @param   percent процент под который был взят кредит (0 - 100)
- * @param   equipmet приобретение оборудования (тыс.)
+ * @param   equipmet стоимость приобретенного оборудования (тыс.)
  * @param   capital первоначальные оборотные средства (тыс.)
  * @param   ownerCapital собственные средства предпринимателя (тыс.)
  * @returns Сумма процента за кредит (тыс.)
