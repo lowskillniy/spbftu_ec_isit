@@ -19,60 +19,24 @@
       "sizes": "144x144"
     },
     {
-      "src": "res/ico/android/android-launchericon-96-96.png",
-      "sizes": "96x96"
-    },
-    {
       "src": "res/ico/android/android-launchericon-72-72.png",
       "sizes": "72x72"
-    },
-    {
-      "src": "res/ico/android/android-launchericon-48-48.png",
-      "sizes": "48x48"
     },
     {
       "src": "res/ico/ios/16.png",
       "sizes": "16x16"
     },
     {
-      "src": "res/ico/ios/20.png",
-      "sizes": "20x20"
-    },
-    {
-      "src": "res/ico/ios/29.png",
-      "sizes": "29x29"
-    },
-    {
       "src": "res/ico/ios/32.png",
       "sizes": "32x32"
-    },
-    {
-      "src": "res/ico/ios/40.png",
-      "sizes": "40x40"
-    },
-    {
-      "src": "res/ico/ios/50.png",
-      "sizes": "50x50"
-    },
-    {
-      "src": "res/ico/ios/57.png",
-      "sizes": "57x57"
     },
     {
       "src": "res/ico/ios/58.png",
       "sizes": "58x58"
     },
     {
-      "src": "res/ico/ios/60.png",
-      "sizes": "60x60"
-    },
-    {
       "src": "res/ico/ios/64.png",
       "sizes": "64x64"
-    },
-    {
-      "src": "res/ico/ios/72.png",
-      "sizes": "72x72"
     },
     {
       "src": "res/ico/ios/76.png",
@@ -85,10 +49,6 @@
     {
       "src": "res/ico/ios/87.png",
       "sizes": "87x87"
-    },
-    {
-      "src": "res/ico/ios/100.png",
-      "sizes": "100x100"
     },
     {
       "src": "res/ico/ios/114.png",
