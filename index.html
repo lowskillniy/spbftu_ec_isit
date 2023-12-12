@@ -13,13 +13,13 @@
    <header>
       <p>ЗАДАНИЕ РАСЧЁТНОЙ РАБОТЫ</p>
    </header>
-   <section>
+   <section id="mainSection">
       <div class="mainButtons">
          <button id='button-install' class="installButton" hidden='true'>Install</button>
          <button id="calcButton">Рассчитать значения</button>
       </div>
       <button id="controlGetDataSection" class="accordionDiv">Поля ввода данных</button>
-      <div class="getDataSection">
+      <div data-id='inputData' class="getDataSection">
          <form class="inputForm">
             <label for="investmentSize">Объём инвестиций</label>
             <input class="dataInput" type="text" id="investmentSize" pattern="\d+([,\.]\d{1,})?" />
@@ -84,24 +84,23 @@
             <label for="loanRepaymentPeriod">Срок погашения кредита</label>
             <input class="dataInput" type="text" id="loanRepaymentPeriod" pattern="\d+([,\.]\d{1,})?" />
          </form>
-         <!-- /*выпадающий список* -->
          <form class="inputForm">
             <label for="interestPayment">Выплата процентов</label>
             <input class="dataInput" type="text" id="interestPayment" value="Ежеквартально равными долями"
                disabled="true" />
          </form>
-         <!-- /*выпадающий список* -->
          <form class="inputForm">
             <label for="loanRepayment">Погашение кредита</label>
             <input class="dataInput" type="text" id="loanRepayment"
                value="Равными долями, начиная со 2 квартала деятельности" disabled="true" />
          </form>
+         <button class="closeGetDataButton">Закрыть</button>
       </div>
       <!-- тут будет раздел с результатами вычислений-->
    </section>
 
 </body>
-<script src="/js/app.js"></script>
-<script src="/js/calc.js"></script>
+<script src="/js/app.js" type="module"></script>
+<script src="/js/calc.js" type="module"></script>
 
 </html>

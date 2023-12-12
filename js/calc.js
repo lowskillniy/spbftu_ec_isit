@@ -1,3 +1,5 @@
+import {accordeionsAction, resultAccordeonDiv} from './app.js'
+
 /**
  * @param   hours кол-во рабочих часов в сутках
  * @param   days кол-во рабочих дней
@@ -8,13 +10,48 @@ function getQ(hours, days, perHourCost) {
   return +hours * +days * +perHourCost
 }
 
+let calculationButtonAction = () => {
+  let calcButton = document.getElementById('calcButton')
+  calcButton.addEventListener('click', elem => {
+    if (document.getElementById('controlGetResultSection')) {
+      document.getElementById('controlGetResultSection').remove()
+    }
+    let controlGetDataSection = document.getElementById('controlGetDataSection')
+    controlGetDataSection.classList.remove('active')
+    let panel = controlGetDataSection.nextElementSibling;
+    panel.style.maxHeight = null;
+    document.getElementById('mainSection').insertAdjacentHTML("beforeend", resultAccordeonDiv)
+    removeEvents()
+    accordeionsAction()
+  })
+}
+
+export let clicking = (element) => {
+  console.log(element)
+  element.addEventListener('click', elem => {
+    elem.target.classList.toggle("active");
+    let panel = elem.target.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  })
+}
+
+export let removeEvents = () => {
+  let arrayOfAccordions = [...document.querySelectorAll(".accordionDiv")]
+  arrayOfAccordions.forEach(element => {
+    element.removeEventListener('click', clicking())
+  })
+}
+
 let getDataForCalc = () => {
   let arrayOfForms = [...document.querySelectorAll(".inputForm")]
   let arrayOfInputs = [...document.querySelectorAll(".dataInput")]
   arrayOfForms.forEach((e) => {
     e.addEventListener('submit', elem => {
       elem.preventDefault()
-      console.log('it worked')
       let allFilled = true
       arrayOfInputs.forEach((element) => {
         if (element.value == '') {
@@ -28,23 +65,9 @@ let getDataForCalc = () => {
   })
 }
 
-let accordeionsAction = () => {
-  let arrayOfAccordions = [...document.querySelectorAll(".accordionDiv")]
-  arrayOfAccordions.forEach(element => {
-    element.addEventListener('click', elem => {
-      elem.target.classList.toggle("active");
-        let panel = elem.target.nextElementSibling;
-        if (panel.style.maxHeight){
-          panel.style.maxHeight = null;
-        } else {
-          panel.style.maxHeight = panel.scrollHeight + "px";
-        }
-    })
-  });
-}
-
 getDataForCalc()
-accordeionsAction()
+calculationButtonAction()
+
 //#region Андреевские приколы 
 /**
  * @param   equipmet приобретение оборудования (тыс.)
@@ -86,7 +109,7 @@ function getAmortPayments(period, equipmet) {
  * @returns Сумма текущих затрат без амортизации (тыс.)
  */
 function getSumPaymentWithoutAmort(rent, exploitation, others, materials, ownerSalary, workerSalary, percent) {
-  insurancePayment = getInsurancePayment(ownerSalary, workerSalary, percent);
+  let insurancePayment = getInsurancePayment(ownerSalary, workerSalary, percent);
   return +rent + +exploitation + +others + +materials + +ownerSalary + +workerSalary + +insurancePayment;
 }
 
@@ -107,9 +130,9 @@ function getSumPaymentWithoutAmort(rent, exploitation, others, materials, ownerS
  * @returns Общая сумма затрат (тыс.)
  */
 function getSumPaymentWithAmort(rent, exploitation, others, materials, ownerSalary, workerSalary, percent, period, equipmet, periodCred, percentCred, capital, ownerCapital) {
-  sumPayment = getSumPaymentWithoutAmort(rent, exploitation, others, materials, ownerSalary, workerSalary, percent);
-  amortPayment = getAmortPayments(period, equipmet);
-  sumPercent = getSumPercentPerQuarter(periodCred, percentCred, equipmet, capital, ownerCapital)
+  let sumPayment = getSumPaymentWithoutAmort(rent, exploitation, others, materials, ownerSalary, workerSalary, percent);
+  let amortPayment = getAmortPayments(period, equipmet);
+  let sumPercent = getSumPercentPerQuarter(periodCred, percentCred, equipmet, capital, ownerCapital)
 
   return sumPayment + amortPayment + sumPercent
 }
@@ -132,8 +155,8 @@ function getQuarters(period) {
  * @returns Сумма процента за кредит (тыс.)
  */
 function getSumPercentPerQuarter(period, percent, equipmet, capital, ownerCapital) {
-  creditSum = getCreditSum(equipmet, capital, ownerCapital);
-  quarter = getQuarters(period)
+  let creditSum = getCreditSum(equipmet, capital, ownerCapital);
+  let quarter = getQuarters(period)
   return creditSum * (percent / 100) * (period / 12) / quarter;
 }
 
@@ -145,7 +168,7 @@ function getSumPercentPerQuarter(period, percent, equipmet, capital, ownerCapita
  * @returns Сумма возврата кредита (тыс.)
  */
 function getSumCreditRefund(period, equipmet, capital, ownerCapital) {
-  quarter = getQuarters(period)
+  let quarter = getQuarters(period)
   return getQ(equipmet, capital, ownerCapital) / quarter;
 }
 
@@ -175,11 +198,11 @@ function getInitialTax(hours, days, perHourCost, percent = 6) {
  * @returns Уменьшенная сумма налога (тыс/квартал)
  */
 function getTaxDecreased(ownerSalary, workerSalary, percent, hours, days, perHourCost, percentS = 6) {
-  insurancePayment = getInsurancePayment(ownerSalary, workerSalary, percent);
-  initialTax = getInitialTax(hours, days, perHourCost, percentS);
+  let insurancePayment = getInsurancePayment(ownerSalary, workerSalary, percent);
+  let initialTax = getInitialTax(hours, days, perHourCost, percentS);
 
-  halfTax = initialTax / 2;
-  result = initialTax - insurancePayment;
+  let halfTax = initialTax / 2;
+  let result = initialTax - insurancePayment;
 
   if (result > halfTax) {
     result = halfTax;

@@ -27,8 +27,9 @@ header {
    align-items: center;
    justify-content: center;
    z-index: 2;
-   font-weight: 500;
-   font-size: 22px;
+   font-weight: 550;
+   font-size: 23px;
+   letter-spacing: 5px;
 }
 
 section {
@@ -42,7 +43,7 @@ button {
    margin-bottom: 10px;
    background: #84c552;
    border: 0;
-   border-radius: 15px;
+   border-radius: 10px;
    color: #fff;
    cursor: pointer;
    font-size: 1rem;
@@ -69,6 +70,7 @@ button {
 }
 
 .getDataSection {
+   display: flex;
    flex-direction: column;
    max-height: 0;
    overflow: hidden;
@@ -93,17 +95,15 @@ button {
    align-self: center;
 }
 
-#controlGetDataSection {
-   cursor: pointer;
-   padding: 18px;
-   width: 100%;
-   text-align: left;
-   border: none;
-   outline: none;
-}
 
 .accordionDiv {
-   border-radius: unset;
+   /* border-radius: unset; */
+   cursor: pointer;
+   border: none;
+   outline: none;
+   text-align: left;
+   padding: 18px;
+   width: 100%;
    transition: 0.5s;
 }
 

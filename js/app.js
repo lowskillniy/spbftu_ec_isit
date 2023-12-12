@@ -1,3 +1,5 @@
+import {clicking} from './calc.js'
+
 let deferredPrompt;
 let buttonInstall;
 
@@ -38,3 +40,28 @@ function installApp() {
   });
 }
 
+export let resultAccordeonDiv = `
+  <button id="controlGetResultSection" class="accordionDiv">Результаты вычислений</button>
+  <div data-id='outputData' class="getDataSection">
+    <button class="closeGetDataButton">Закрыть</button>
+  </div>
+`
+
+
+export let accordeionsAction = () => {
+  let arrayOfAccordions = [...document.querySelectorAll(".accordionDiv")]
+  arrayOfAccordions.forEach(element => {
+    console.log(element)
+    clicking(element)
+  })
+  let closeGetDataButton = [...document.querySelectorAll('.closeGetDataButton')]
+  closeGetDataButton.forEach(elem => {
+    elem.style.alignSelf = 'center'
+    elem.addEventListener('click', e => {
+      let panel = e.target.parentElement;
+      panel.style.maxHeight = null;
+    })
+  })
+}
+
+accordeionsAction()
