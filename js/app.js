@@ -1,4 +1,4 @@
-import {clicking} from './calc.js'
+import {fillingMainState} from './calc.js'
 
 let deferredPrompt;
 let buttonInstall;
@@ -47,7 +47,7 @@ export let resultAccordeonDiv = `
   </div>
 `
 
-/**Функция добавления EventListener на аккордеоны и кнопок к ним
+/**Функция добавления EventListener и кнопок на аккордеоны
  * 
  * @param {boolean} action переменная, определяющая повторный вызов функции при нажатии кнопки произведения расчётов
  */
@@ -65,11 +65,71 @@ export let accordeionsAction = (action) => {
   })
   closeGetDataButton.forEach(elem => {
     elem.style.alignSelf = 'center'
-    elem.addEventListener('click', e => {
-      let panel = e.target.parentElement;
-      panel.style.maxHeight = null;
+    elem.addEventListener('click', () => clicking(elem.parentElement.previousElementSibling))
     })
+}
+
+
+/**
+ *Функция, навешивающая EventListener на кнопку "Расчитать значения" 
+ */
+
+export  let addCalcButtonEvent = () => {
+    let calcButton = document.getElementById('calcButton')
+    calcButton.addEventListener('click', startCalculations)
+}
+
+/**
+ *Функция изменения вида страницы при начале вычислений
+*/
+export let startCalculations = () => {
+  if (checkingFilledData()) {
+    //контроль внешнего вида страницы
+    if (document.getElementById('controlGetResultSection')) {
+      document.getElementById('controlGetResultSection').remove()
+    }
+    let controlGetDataSection = document.getElementById('controlGetDataSection')
+    controlGetDataSection.classList.remove('active')
+    let panel = controlGetDataSection.nextElementSibling;
+    panel.style.maxHeight = null;
+    document.getElementById('mainSection').insertAdjacentHTML("beforeend", resultAccordeonDiv)
+    //переменная, ограничивающая присвоение EventListener
+    let action = true
+    accordeionsAction(action)
+    fillingMainState()
+    clicking(document.getElementById('controlGetResultSection'))
+  }
+}
+
+/**
+ * Функция, проверяющая заполненность полей для ввода исходных данных
+ */
+export let checkingFilledData = () => {
+  let allFilled = true
+  let arrayOfInputs = [...document.querySelectorAll(".dataInput")]
+  arrayOfInputs.forEach((element) => {
+    if (element.value == '') {
+      allFilled = false
+    }
   })
+  if (!allFilled) {
+    alert('Необходимо заполнить все данные')
+  }
+  return allFilled
+}
+
+/**Функция, отвечающая за анимацию нажатия на аккордеон
+ * @param {object} element - HTML объект (аккордеон)
+ * @param {string} typeOfObject - 'closeButton', если действие вызвано кнопкой закрытия
+ */
+export let clicking = (element) => {
+  element.classList.toggle("active");
+    let panel = element.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
 }
 
 // export let removeEvents = () => {
@@ -82,4 +142,5 @@ export let accordeionsAction = (action) => {
 // }
 
 //выполняется при загрузке страницы
+addCalcButtonEvent()
 accordeionsAction()

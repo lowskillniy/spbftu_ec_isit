@@ -1,4 +1,4 @@
-import {accordeionsAction, resultAccordeonDiv, } from './app.js'
+import {startCalculations} from './app.js'
 
 /**
  * @param   hours кол-во рабочих часов в сутках
@@ -10,68 +10,35 @@ function getQ(hours, days, perHourCost) {
   return +hours * +days * +perHourCost
 }
 
-/**
- *Функция, отвечающая за запуск математических расчётов и добавление аккордеона с результатами вычислений
- */
+let mainState = {}
 
-let calculationButtonAction = () => {
-  let calcButton = document.getElementById('calcButton')
-  calcButton.addEventListener('click', elem => {
-    if (document.getElementById('controlGetResultSection')) {
-      document.getElementById('controlGetResultSection').remove()
-    }
-    let controlGetDataSection = document.getElementById('controlGetDataSection')
-    controlGetDataSection.classList.remove('active')
-    let panel = controlGetDataSection.nextElementSibling;
-    panel.style.maxHeight = null;
-    document.getElementById('mainSection').insertAdjacentHTML("beforeend", resultAccordeonDiv)
-    // removeEvents()
-    //переменная, ограничивающая присвоение EventListener
-    let action = true
-    accordeionsAction(action)
-  })
+/**
+ * Функция, заполняющяя главный объект с данными
+ */
+export let fillingMainState = () => {
+  let arrayOfInputs = [...document.querySelectorAll(".dataInput")]
+  arrayOfInputs.forEach(element => {
+    mainState[element.id] = +element.value
+  });
+  console.log(mainState)
 }
 
-/**Функция, отвечающая за анимацию аккордеонов
- * @param {object} element - HTML объект (аккордеон)
- */
-
-export let clicking = (element) => {
-  element.classList.toggle("active");
-    let panel = element.nextElementSibling;
-    if (panel.style.maxHeight){
-      panel.style.maxHeight = null;
-    } else {
-      panel.style.maxHeight = panel.scrollHeight + "px";
-    }
-  }
-
-
 /**
- * Функция, проверяющая заполненность полей для ввода исходных данных
+ * Функция, добавляющая EventListener на формы
  */
-
 let getDataForCalc = () => {
   let arrayOfForms = [...document.querySelectorAll(".inputForm")]
-  let arrayOfInputs = [...document.querySelectorAll(".dataInput")]
   arrayOfForms.forEach((e) => {
     e.addEventListener('submit', elem => {
       elem.preventDefault()
-      let allFilled = true
-      arrayOfInputs.forEach((element) => {
-        if (element.value == '') {
-          allFilled = false
-        }
-      })
-      if (!allFilled) {
-        alert('Необходимо заполнить все данные')
-      }
+      startCalculations()
     })
   })
 }
 
+
+
 getDataForCalc()
-calculationButtonAction()
 
 //#region Андреевские приколы 
 /**
