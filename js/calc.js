@@ -1,4 +1,4 @@
-import {accordeionsAction, resultAccordeonDiv} from './app.js'
+import {accordeionsAction, resultAccordeonDiv, } from './app.js'
 
 /**
  * @param   hours кол-во рабочих часов в сутках
@@ -9,6 +9,10 @@ import {accordeionsAction, resultAccordeonDiv} from './app.js'
 function getQ(hours, days, perHourCost) {
   return +hours * +days * +perHourCost
 }
+
+/**
+ *Функция, отвечающая за запуск математических расчётов и добавление аккордеона с результатами вычислений
+ */
 
 let calculationButtonAction = () => {
   let calcButton = document.getElementById('calcButton')
@@ -21,30 +25,31 @@ let calculationButtonAction = () => {
     let panel = controlGetDataSection.nextElementSibling;
     panel.style.maxHeight = null;
     document.getElementById('mainSection').insertAdjacentHTML("beforeend", resultAccordeonDiv)
-    removeEvents()
-    accordeionsAction()
+    // removeEvents()
+    //переменная, ограничивающая присвоение EventListener
+    let action = true
+    accordeionsAction(action)
   })
 }
 
+/**Функция, отвечающая за анимацию аккордеонов
+ * @param {object} element - HTML объект (аккордеон)
+ */
+
 export let clicking = (element) => {
-  console.log(element)
-  element.addEventListener('click', elem => {
-    elem.target.classList.toggle("active");
-    let panel = elem.target.nextElementSibling;
+  element.classList.toggle("active");
+    let panel = element.nextElementSibling;
     if (panel.style.maxHeight){
       panel.style.maxHeight = null;
     } else {
       panel.style.maxHeight = panel.scrollHeight + "px";
     }
-  })
-}
+  }
 
-export let removeEvents = () => {
-  let arrayOfAccordions = [...document.querySelectorAll(".accordionDiv")]
-  arrayOfAccordions.forEach(element => {
-    element.removeEventListener('click', clicking())
-  })
-}
+
+/**
+ * Функция, проверяющая заполненность полей для ввода исходных данных
+ */
 
 let getDataForCalc = () => {
   let arrayOfForms = [...document.querySelectorAll(".inputForm")]

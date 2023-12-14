@@ -47,14 +47,22 @@ export let resultAccordeonDiv = `
   </div>
 `
 
+/**Функция добавления EventListener на аккордеоны и кнопок к ним
+ * 
+ * @param {boolean} action переменная, определяющая повторный вызов функции при нажатии кнопки произведения расчётов
+ */
 
-export let accordeionsAction = () => {
+export let accordeionsAction = (action) => {
   let arrayOfAccordions = [...document.querySelectorAll(".accordionDiv")]
-  arrayOfAccordions.forEach(element => {
-    console.log(element)
-    clicking(element)
-  })
   let closeGetDataButton = [...document.querySelectorAll('.closeGetDataButton')]
+  //предотвращение навешивания на первый аккордеон второго EventListener и второй кнопки
+  if (action) {
+    arrayOfAccordions.shift(0)
+    closeGetDataButton.shift(0)
+  }
+  arrayOfAccordions.forEach(element => {
+    element.addEventListener('click',  () => clicking(element))
+  })
   closeGetDataButton.forEach(elem => {
     elem.style.alignSelf = 'center'
     elem.addEventListener('click', e => {
@@ -64,4 +72,14 @@ export let accordeionsAction = () => {
   })
 }
 
+// export let removeEvents = () => {
+//   console.log('не зевать')
+//   let arrayOfAccordions = [...document.querySelectorAll(".accordionDiv")]
+//   arrayOfAccordions.forEach(element => {
+//     console.log(element)
+//     element.removeEventListener('click', () => clicking(element))
+//   })
+// }
+
+//выполняется при загрузке страницы
 accordeionsAction()
