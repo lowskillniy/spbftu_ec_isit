@@ -14,6 +14,11 @@ window.addEventListener('load', async () => {
     });
   }
   buttonInstall = document.querySelector("#button-install");
+  let localOjbect = JSON.parse(localStorage.getItem('inputData'))
+  let arrayOfInputs = [...document.querySelectorAll('.dataInput')]
+  arrayOfInputs.forEach(e => {
+    e.value = localOjbect[e.id]
+  })
 })
 
 
@@ -38,6 +43,10 @@ function installApp() {
     buttonInstall.disabled = false;
     deferredPrompt = null;
   });
+}
+
+export let localStoragefunctionality = () => {
+  
 }
 
 export let resultAccordeonDiv = `
@@ -83,11 +92,21 @@ export  let addCalcButtonEvent = () => {
  *Функция изменения вида страницы при начале вычислений
 */
 export let startCalculations = () => {
+  let localOjbect = {}
+  let arrayOfInputs = [...document.querySelectorAll('.dataInput')]
+  arrayOfInputs.forEach(elem => {
+    localOjbect[elem.id] = elem.value
+  })
+  localStorage.setItem('inputData', JSON.stringify(localOjbect))
   if (checkingFilledData()) {
     //контроль внешнего вида страницы
     if (document.getElementById('controlGetResultSection')) {
       document.getElementById('controlGetResultSection').remove()
     }
+    if (document.querySelector('[data-id="outputData"]')) {
+      document.querySelector('[data-id="outputData"]').remove()
+    }
+
     let controlGetDataSection = document.getElementById('controlGetDataSection')
     controlGetDataSection.classList.remove('active')
     let panel = controlGetDataSection.nextElementSibling;
