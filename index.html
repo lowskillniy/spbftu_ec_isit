@@ -21,7 +21,7 @@
       <button id="controlGetDataSection" class="accordionDiv">Поля ввода данных</button>
       <div data-id='inputData' class="getDataSection">
          <form class="inputForm">
-            <label for="investmentSize">Объём инвестиций</label>
+            <label for="investmentSize">Объём инвестиций (тыс. рублей)</label>
             <input class="dataInput" type="text" id="investmentSize" pattern="\d+([,\.]\d{1,})?" />
          </form>
          <form class="inputForm">
@@ -29,7 +29,7 @@
             <input class="dataInput" type="text" id="equipmentServiceLife" pattern="\d+([,\.]\d{1,})?" value="5" />
          </form>
          <form class="inputForm">
-            <label for="equipmentServiceLife">Стоимость одного часа</label>
+            <label for="equipmentServiceLife">Стоимость одного часа (тыс. рублей)</label>
             <input class="dataInput" type="text" id="equipmentServiceLife" pattern="\d+([,\.]\d{1,})?" value="5" />
          </form>
          <form class="inputForm">
@@ -45,35 +45,35 @@
             <input class="dataInput" type="text" id="plannedAmountWork" pattern="\d+([,\.]\d{1,})?" value="7" />
          </form>
          <form class="inputForm">
-            <label for="rent">Аренда</label>
+            <label for="rent">Аренда (тыс. рублей)</label>
             <input class="dataInput" type="text" id="rent" pattern="\d+([,\.]\d{1,})?" />
          </form>
          <form class="inputForm">
-            <label for="operatingСosts">Эксплуатационые расходы </label>
+            <label for="operatingСosts">Эксплуатационые расходы (тыс. рублей)</label>
             <input class="dataInput" type="text" id="operatingСosts" pattern="\d+([,\.]\d{1,})?" />
          </form>
          <form class="inputForm">
-            <label for="businessmanSalary">Зарплата бизнесмена</label>
+            <label for="businessmanSalary">Зарплата бизнесмена (тыс. рублей)</label>
             <input class="dataInput" type="text" id="businessmanSalary" pattern="\d+([,\.]\d{1,})?" />
          </form>
          <form class="inputForm">
-            <label for="workerSalary">Зарплата рабочего</label>
+            <label for="workerSalary">Зарплата рабочего (тыс. рублей)</label>
             <input class="dataInput" type="text" id="workerSalary" pattern="\d+([,\.]\d{1,})?" />
          </form>
          <form class="inputForm">
-            <label for="salaryInsuranceContributions">Страховые взносы на зарплату</label>
+            <label for="salaryInsuranceContributions">Страховые взносы на зарплату (тыс. рублей)</label>
             <input class="dataInput" type="text" id="salaryInsuranceContributions" pattern="\d+([,\.]\d{1,})?" />
          </form>
          <form class="inputForm">
-            <label for="materials">Материалы</label>
+            <label for="materials">Материалы (тыс. рублей)</label>
             <input class="dataInput" type="text" id="materials" pattern="\d+([,\.]\d{1,})?" />
          </form>
          <form class="inputForm">
-            <label for="otherCosts">Прочие затраты</label>
+            <label for="otherCosts">Прочие затраты (тыс. рублей)</label>
             <input class="dataInput" type="text" id="otherCosts" pattern="\d+([,\.]\d{1,})?" />
          </form>
          <form class="inputForm">
-            <label for="loanPercentage">Процент годовых по кредиту</label>
+            <label for="loanPercentage">Процент годовых по кредиту, %</label>
             <input class="dataInput" type="text" id="loanPercentage" pattern="\d+([,\.]\d{1,})?" />
          </form>
          <form class="inputForm">
@@ -81,19 +81,11 @@
             <input class="dataInput" type="text" id="shareOfOwnFunds" pattern="\d+([,\.]\d{1,})?" />
          </form>
          <form class="inputForm">
-            <label for="loanRepaymentPeriod">Срок погашения кредита</label>
+            <label for="loanRepaymentPeriod">Срок погашения кредита (мес.)</label>
             <input class="dataInput" type="text" id="loanRepaymentPeriod" pattern="\d+([,\.]\d{1,})?" />
          </form>
-         <form class="inputForm">
-            <label for="interestPayment">Выплата процентов</label>
-            <input class="dataInput" type="text" id="interestPayment" value="Ежеквартально равными долями"
-               disabled="true" />
-         </form>
-         <form class="inputForm">
-            <label for="loanRepayment">Погашение кредита</label>
-            <input class="dataInput" type="text" id="loanRepayment"
-               value="Равными долями, начиная со 2 квартала деятельности" disabled="true" />
-         </form>
+         <span>Выплата процентов – ежеквартально равными долями</span>
+         <span>Погашение кредита – равными долями, начиная со 2 квартала деятельности</span>
          <button class="closeGetDataButton">Закрыть</button>
       </div>
       <!-- тут будет раздел с результатами вычислений-->

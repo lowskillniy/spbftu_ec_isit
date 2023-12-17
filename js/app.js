@@ -1,4 +1,4 @@
-import {fillingMainState} from './calc.js'
+import {fillingMainState, resultForms} from './calc.js'
 
 let deferredPrompt;
 let buttonInstall;
@@ -17,7 +17,7 @@ window.addEventListener('load', async () => {
   let localOjbect = JSON.parse(localStorage.getItem('inputData'))
   let arrayOfInputs = [...document.querySelectorAll('.dataInput')]
   arrayOfInputs.forEach(e => {
-    e.value = localOjbect[e.id]
+    e.value = +(localOjbect[e.id])
   })
 })
 
@@ -45,9 +45,6 @@ function installApp() {
   });
 }
 
-export let localStoragefunctionality = () => {
-  
-}
 
 export let resultAccordeonDiv = `
   <button id="controlGetResultSection" class="accordionDiv">Результаты вычислений</button>
@@ -95,7 +92,7 @@ export let startCalculations = () => {
   let localOjbect = {}
   let arrayOfInputs = [...document.querySelectorAll('.dataInput')]
   arrayOfInputs.forEach(elem => {
-    localOjbect[elem.id] = elem.value
+    localOjbect[elem.id] = +elem.value
   })
   localStorage.setItem('inputData', JSON.stringify(localOjbect))
   if (checkingFilledData()) {
@@ -116,6 +113,7 @@ export let startCalculations = () => {
     let action = true
     accordeionsAction(action)
     fillingMainState()
+    document.querySelector('[data-id=outputData]').insertAdjacentHTML("afterbegin", resultForms())
     clicking(document.getElementById('controlGetResultSection'))
   }
 }
