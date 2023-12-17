@@ -41,13 +41,12 @@ getDataForCalc()
 //#region Андреевские приколы 
 
 /**
- * @param   equipmet приобретение оборудования (тыс.)
  * @param   capital первоначальные оборотные средства (тыс.)
- * @param   ownerCapital собственные средства предпринимателя (тыс.)
  * @returns Сумма, которую необходимо взять в кредит (тыс.)
  */
-function getCreditSum(equipmet = 1000, capital = 100, ownerCapital = 825) {
-  return equipmet * 1000 + capital * 1000 - ownerCapital * 1000
+function getCreditSum(capital = 100) {
+  let ownerCapital = mainState.investmentSize * mainState.shareOfOwnFunds
+  return mainState.investmentSize * 1000 + capital * 1000 - ownerCapital * 1000
 }
 
 /**
@@ -58,11 +57,10 @@ function getInsurancePayment() {
 }
 
 /**
- * @param   equipmet стоимость приобретенного оборудования (тыс.)
  * @returns Сумма амортизационных затрат (тыс.)
  */
-function getAmortPayments(equipmet = 1000) {
-  return equipmet * 1000 / (mainState.equipmentServiceLife * 12)
+function getAmortPayments() {
+  return mainState.investmentSize * 1000 / (mainState.equipmentServiceLife * 12)
 }
 
 /**
@@ -204,9 +202,10 @@ function getRd() {
  * @returns Rg, %
  */
 function getRg() {
-  let equipAndCredPayments = 1000 + 100
+  let ownerCapital = mainState.investmentSize * mainState.shareOfOwnFunds
+  let equipAndCredPayments = mainState.investmentSize + 100
   let specificCredWeight = getCreditSum() / equipAndCredPayments
-  let specificCapitalWeight = 825 / equipAndCredPayments
+  let specificCapitalWeight = ownerCapital / equipAndCredPayments
 
   return getRd() * specificCredWeight + getRq() * specificCapitalWeight
 }
