@@ -1,13 +1,11 @@
-import {startCalculations} from './app.js'
+import { startCalculations } from './app.js'
 
 /**
- * @param   hours кол-во рабочих часов в сутках
- * @param   days кол-во рабочих дней
- * @param   perHourCost стоимость одного часа работы
  * @returns Объём услуг Q
  */
-function getQ(hours, days, perHourCost) {
-  return +hours * +days * +perHourCost
+export function getQ() {
+  let res = mainState.equipmentServiceLife * mainState.workingTime * mainState.numberOfWorkingDays
+  return res
 }
 
 let mainState = {}
@@ -41,107 +39,74 @@ let getDataForCalc = () => {
 getDataForCalc()
 
 //#region Андреевские приколы 
+
 /**
  * @param   equipmet приобретение оборудования (тыс.)
  * @param   capital первоначальные оборотные средства (тыс.)
  * @param   ownerCapital собственные средства предпринимателя (тыс.)
  * @returns Сумма, которую необходимо взять в кредит (тыс.)
  */
-function getCreditSum(equipmet, capital, ownerCapital) {
-  return +equipmet * 1000 + +capital * 1000 - +ownerCapital * 1000
+function getCreditSum(equipmet = 1000, capital = 100, ownerCapital = 825) {
+  return equipmet * 1000 + capital * 1000 - ownerCapital * 1000
 }
 
 /**
- * @param   ownerSalary заработная плата бизнесмена (тыс.)
- * @param   workerSalary заработная плата работника (тыс.)
- * @param   percent страховые взносы ФЗП (процент 0-100)
  * @returns Сумма страховых взносов по расчету (тыс.)
  */
-function getInsurancePayment(ownerSalary, workerSalary, percent) {
-  return (+ownerSalary * 1000 + +workerSalary * 1000) * (+percent / 100)
+function getInsurancePayment() {
+  return (mainState.businessmanSalary * 1000 + mainState.workerSalary * 1000) * (mainState.salaryInsuranceContributions / 100)
 }
 
 /**
- * @param   period амотризационный период оборудования (года)
  * @param   equipmet стоимость приобретенного оборудования (тыс.)
  * @returns Сумма амортизационных затрат (тыс.)
  */
-function getAmortPayments(period, equipmet) {
-  return equipmet * 1000 / (period * 12)
+function getAmortPayments(equipmet = 1000) {
+  return equipmet * 1000 / (mainState.equipmentServiceLife * 12)
 }
 
 /**
- * @param   rent аренда помещения (тыс.)
- * @param   exploitation экспуатационные затраты (тыс.)
- * @param   others прочие затраты (тыс.)
- * @param   materials стоимость материалов (тыс.)
- * @param   ownerSalary заработная плата бизнесмена (тыс.)
- * @param   workerSalary стоимость приобретенного оборудования (тыс.)
- * @param   percent страховые взносы ФЗП (процент 0-100)
  * @returns Сумма текущих затрат без амортизации (тыс.)
  */
-function getSumPaymentWithoutAmort(rent, exploitation, others, materials, ownerSalary, workerSalary, percent) {
-  let insurancePayment = getInsurancePayment(ownerSalary, workerSalary, percent);
-  return +rent + +exploitation + +others + +materials + +ownerSalary + +workerSalary + +insurancePayment;
+function getSumPaymentWithoutAmort() {
+  let insurancePayment = getInsurancePayment();
+  return mainState.rent + mainState.operatingСosts + mainState.otherCosts + mainState.materials + mainState.businessmanSalary + mainState.workerSalary + insurancePayment;
 }
 
 /**
- * @param   rent аренда помещения (тыс.)
- * @param   exploitation экспуатационные затраты (тыс.)
- * @param   others прочие затраты (тыс.)
- * @param   materials стоимость материалов (тыс.)
- * @param   ownerSalary заработная плата бизнесмена (тыс.)
- * @param   workerSalary стоимость приобретенного оборудования (тыс.)
- * @param   percent страховые взносы ФЗП (процент 0-100)
- * @param   period амотризационный период оборудования (года)
- * @param   equipmet стоимость приобретенного оборудования (тыс.)
- * @param   periodCred срок под который был взят кредит (мес.)
- * @param   percentCred процент под который был взят кредит (0 - 100)
- * @param   capital первоначальные оборотные средства (тыс.)
- * @param   ownerCapital собственные средства предпринимателя (тыс.)
  * @returns Общая сумма затрат (тыс.)
  */
-function getSumPaymentWithAmort(rent, exploitation, others, materials, ownerSalary, workerSalary, percent, period, equipmet, periodCred, percentCred, capital, ownerCapital) {
-  let sumPayment = getSumPaymentWithoutAmort(rent, exploitation, others, materials, ownerSalary, workerSalary, percent);
-  let amortPayment = getAmortPayments(period, equipmet);
-  let sumPercent = getSumPercentPerQuarter(periodCred, percentCred, equipmet, capital, ownerCapital)
+function getSumPaymentWithAmort() {
+  let sumPayment = getSumPaymentWithoutAmort();
+  let amortPayment = getAmortPayments();
+  let sumPercent = getSumPercentPerQuarter()
 
   return sumPayment + amortPayment + sumPercent
 }
-//#region Сумма погашения кредита
+//#region Схема погашения кредита
 
 /**
- * @param   period срок под который был взят кредит (мес.)
- * @returns Сумма возврата кредита (тыс.)
+ * @returns Количество кварталов
  */
-function getQuarters(period) {
-  return period / 3;
+function getQuarters() {
+  return mainState.loanRepaymentPeriod / 3;
 }
 
 /**
- * @param   period срок под который был взят кредит (мес.)
- * @param   percent процент под который был взят кредит (0 - 100)
- * @param   equipmet стоимость приобретенного оборудования (тыс.)
- * @param   capital первоначальные оборотные средства (тыс.)
- * @param   ownerCapital собственные средства предпринимателя (тыс.)
  * @returns Сумма процента за кредит (тыс.)
  */
-function getSumPercentPerQuarter(period, percent, equipmet, capital, ownerCapital) {
-  let creditSum = getCreditSum(equipmet, capital, ownerCapital);
-  let quarter = getQuarters(period)
-  return creditSum * (percent / 100) * (period / 12) / quarter;
+function getSumPercentPerQuarter() {
+  let creditSum = getCreditSum();
+  let quarter = getQuarters()
+  return creditSum * (mainState.loanPercentage / 100) * (mainState.loanRepaymentPeriod / 12) / quarter;
 }
 
 /**
- * @param   period срок под который был взят кредит (мес.)
- * @param   equipmet приобретение оборудования (тыс.)
- * @param   capital первоначальные оборотные средства (тыс.)
- * @param   ownerCapital собственные средства предпринимателя (тыс.)
  * @returns Сумма возврата кредита (тыс.)
  */
-function getSumCreditRefund(period, equipmet, capital, ownerCapital) {
-  let quarter = getQuarters(period)
-  return getQ(equipmet, capital, ownerCapital) / quarter;
+function getSumCreditRefund() {
+  let quarters = getQuarters()
+  return getCreditSum() / (quarters - 1);
 }
 
 //#endregion
@@ -149,29 +114,19 @@ function getSumCreditRefund(period, equipmet, capital, ownerCapital) {
 //#region Расчет налога при объекте «доход»
 
 /**
- * @param   hours кол-во рабочих часов в сутках
- * @param   days кол-во рабочих дней
- * @param   perHourCost стоимость одного часа работы
  * @param   percent ставка налога (0 - 100, %)
  * @returns Начальная сумма налога (тыс/квартал)
  */
-function getInitialTax(hours, days, perHourCost, percent = 6) {
-  return getQ(hours, days, perHourCost) * percent / 100 * 3;
+function getInitialTax(percent = 6) {
+  return getQ() * percent / 100 * 3;
 }
 
 /**
- * @param   ownerSalary заработная плата бизнесмена (тыс.)
- * @param   workerSalary заработная плата работника (тыс.)
- * @param   percent страховые взносы ФЗП (процент 0-100)
- * @param   hours кол-во рабочих часов в сутках
- * @param   days кол-во рабочих дней
- * @param   perHourCost стоимость одного часа работы
- * @param   percentS ставка налога (0 - 100, %)
  * @returns Уменьшенная сумма налога (тыс/квартал)
  */
-function getTaxDecreased(ownerSalary, workerSalary, percent, hours, days, perHourCost, percentS = 6) {
-  let insurancePayment = getInsurancePayment(ownerSalary, workerSalary, percent);
-  let initialTax = getInitialTax(hours, days, perHourCost, percentS);
+function getTaxDecreased() {
+  let insurancePayment = getInsurancePayment();
+  let initialTax = getInitialTax();
 
   let halfTax = initialTax / 2;
   let result = initialTax - insurancePayment;
@@ -187,7 +142,91 @@ function getTaxDecreased(ownerSalary, workerSalary, percent, hours, days, perHou
 
 //#region Расчет налога при объекте «доход минус расход»
 
-
+/**
+ * @param   percent ставка налога (0 - 100, %)
+ * @returns Сумма налога при объекте «доход минус расход» (руб/мес)
+ */
+function getSumTaxIncomeOutlay(percent = 15) {
+  return (getQ() - getSumPaymentWithAmort()) * (percent / 100)
+}
 
 //#endregion
+
+//#region Величина производственного риска проекта
+
+
+/**
+ * @returns Сумма постоянных затрат
+ */
+function getProductionRisk() {
+  return getSumPaymentWithoutAmort() + getAmortPayments()
+}
+
 //#endregion
+
+//#region Величина финансового риска в условиях проекта
+
+
+/**
+ * @returns Величина чистой прибыли, %
+ */
+function getClearProfit() {
+  let OP = getQ() - getSumPaymentWithoutAmort() - getAmortPayments();
+  let percentCred = mainState.loanPercentage / 100;
+  let denominator = OP - (percentCred * 275 / 12);
+  return OP / denominator;
+}
+
+//#endregion
+
+//#region Расчет эффективности и риска проекта
+
+/**
+ * @param rWithoutRisk r без риска, %
+ * @param rCB r ЦБ, %
+ * @param sumBuisnesRisk сумма рисков бизнеса, %
+ * @returns Rq, %
+ */
+function getRq(rWithoutRisk = 6, rCB = 10, sumBuisnesRisk = 20) {
+  let years = mainState.loanRepaymentPeriod / 18;
+  return rWithoutRisk + (rCB - rWithoutRisk) * years + sumBuisnesRisk
+}
+
+/**
+ * @param incomeTaxRate ставка налога на прибыль, %
+ * @returns Rd, %
+ */
+function getRd() {
+  return mainState.loanPercentage * (1 - incomeTaxRate / 100)
+}
+
+/**
+ * @returns Rg, %
+ */
+function getRg() {
+  let equipAndCredPayments = 1000 + 100
+  let specificCredWeight = getCreditSum() / equipAndCredPayments
+  let specificCapitalWeight = 825 / equipAndCredPayments
+
+  return getRd() * specificCredWeight + getRq() * specificCapitalWeight
+}
+
+/**
+ * @returns GF, кэш-флоу, тыс/квартал
+ */
+function getGF() {
+  let q = getQ() * 3
+  return q - (getSumPaymentWithoutAmort() * 3 + getTaxDecreased())
+}
+
+/**
+ * @returns ЧДД, кэш-флоу, тыс/квартал
+ */
+function getGF() {
+
+}
+
+//#endregion
+
+//#endregion
+
