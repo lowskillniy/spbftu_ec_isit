@@ -45,22 +45,22 @@ getDataForCalc()
  * @returns Сумма, которую необходимо взять в кредит (тыс.)
  */
 function getCreditSum(capital = 100) {
-  let ownerCapital = mainState.investmentSize * mainState.shareOfOwnFunds
-  return mainState.investmentSize * 1000 + capital * 1000 - ownerCapital * 1000
+  let ownerCapital = (mainState.investmentSize + capital) * mainState.shareOfOwnFunds / 100
+  return mainState.investmentSize + capital - ownerCapital
 }
 
 /**
  * @returns Сумма страховых взносов по расчету (тыс.)
  */
 function getInsurancePayment() {
-  return (mainState.businessmanSalary * 1000 + mainState.workerSalary * 1000) * (mainState.salaryInsuranceContributions / 100)
+  return (mainState.businessmanSalary + mainState.workerSalary) * (mainState.salaryInsuranceContributions / 100)
 }
 
 /**
  * @returns Сумма амортизационных затрат (тыс.)
  */
 function getAmortPayments() {
-  return mainState.investmentSize * 1000 / (mainState.equipmentServiceLife * 12)
+  return mainState.investmentSize / (mainState.equipmentServiceLife * 12)
 }
 
 /**
