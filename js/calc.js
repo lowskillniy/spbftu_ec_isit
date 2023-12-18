@@ -18,7 +18,6 @@ export let fillingMainState = () => {
   arrayOfInputs.forEach(element => {
     mainState[element.id] = +element.value
   });
-  console.log(mainState)
 }
 
 /**
@@ -243,7 +242,7 @@ export let resultForms = () => {
     <input class="dataInput" type="text" value="${getAmortPayments()}" disabled/>
   </form>
   <span>Средства на погашение о обслуживание кредита:</span>
-  <span>Период погашения кредита – ${mainState.loanRepaymentPeriod} (мес.)</span>
+  <p>Период погашения кредита – ${mainState.loanRepaymentPeriod} (мес.)</p>
   <form class="inputForm">
     <label for="sumPercentPerQuarter">Сумма процента за кредит </label>
     <input class="dataInput" type="text" value="${getSumPercentPerQuarter()}"disabled/>
