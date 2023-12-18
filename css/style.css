@@ -28,7 +28,7 @@ header {
    justify-content: center;
    z-index: 2;
    font-weight: 550;
-   font-size: 23px;
+   font-size: min(5vw, 20px);
    letter-spacing: 5px;
    color: white;
 }
@@ -55,6 +55,11 @@ button {
    will-change: auto;
 }
 
+span {
+   margin-bottom: 10px;
+   font-weight: 600;
+}
+
 .mainButtons {
    display: flex;
    flex-direction: row;
@@ -66,8 +71,7 @@ button {
    position: relative;
    display: flex;
    margin-bottom: 10px;
-   border-top: 1px solid lightgrey;
-   padding: 10px 0 10px 0;
+   padding: 5px 0 5px 0;
 }
 
 .getDataSection {

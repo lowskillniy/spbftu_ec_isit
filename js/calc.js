@@ -227,32 +227,32 @@ export let resultForms = () => {
   return `
   <form class="inputForm">
     <label for="scopeServices">Объём услуг</label>
-    <input class="dataInput" type="text" pattern="\d+([,\.]\d{1,})?" value="${getQ()}"disabled/>
+    <input class="dataInput" type="text" value="${getQ()}"disabled/>
   </form>
   <span>Единовременные затраты:</span>
-  <span>Приобретение оборудования – ${mainState.investmentSize}</span>
-  <span>Первоначальные оборотные средства  – 100 тыс. рублей</span>
-  <span>Собственные средства предпринимателя   – ${mainState.investmentSize * mainState.shareOfOwnFunds}</span>
+  <p>Приобретение оборудования – ${mainState.investmentSize}000 рублей  </p>
+  <p>Первоначальные оборотные средства  – 100 тыс. рублей</p>
+  <p>Собственные средства предпринимателя   – ${(mainState.investmentSize + 100) / 100 * mainState.shareOfOwnFunds} тыс. рублей</p>
   <form class="inputForm">
     <label for="creditSum">Необходимо привлечь:</label>
-    <input class="dataInput" type="text"  pattern="\d+([,\.]\d{1,})?" value="${getCreditSum()}" disabled/>
+    <input class="dataInput" type="text" value="${getCreditSum()}" disabled/>
   </form>
   <span>Амортизационные затраты:</span>
-  <span>Приобретение оборудования – ${mainState.equipmentServiceLife}</span>
+  <p>Амортизационный период оборудования – ${mainState.equipmentServiceLife} (лет)</p>
   <form class="inputForm">
     <label for="depreciationCosts">А(мес.): </label>
-    <input class="dataInput" type="text"  pattern="\d+([,\.]\d{1,})?" value="${getAmortPayments()}" disabled/>
+    <input class="dataInput" type="text" value="${getAmortPayments()}" disabled/>
   </form>
   <span>Средства на погашение о обслуживание кредита:</span>
-  <span>Период погашения кредита – ${mainState.loanRepaymentPeriod}</span>
+  <span>Период погашения кредита – ${mainState.loanRepaymentPeriod} (мес.)</span>
   <form class="inputForm">
     <label for="sumPercentPerQuarter">Сумма процента за кредит </label>
-    <input class="dataInput" type="text" pattern="\d+([,\.]\d{1,})?" value="${getSumPercentPerQuarter()}"disabled/>
+    <input class="dataInput" type="text" value="${getSumPercentPerQuarter()}"disabled/>
   </form>
   <span>Расчет налога при объекте «доход»:</span>
   <form class="inputForm">
     <label for="initialTax">Начальная сумма налога (тыс/квартал)</label>
-    <input class="dataInput" type="text"  pattern="\d+([,\.]\d{1,})?" value="${getInitialTax()}"disabled/>
+    <input class="dataInput" type="text" value="${getInitialTax()}"disabled/>
   </form>
   <form class="inputForm">
     <label for="TaxDecreased">Уменьшенная сумма налога (тыс/квартал)</label>
