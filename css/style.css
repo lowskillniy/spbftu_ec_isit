@@ -1,0 +1,144 @@
+:root {
+   box-sizing: border-box;
+}
+/*  */
+*,
+*::before,
+*::after {
+   box-sizing: inherit;
+   margin: 0;
+   padding: 0;
+}
+
+body {
+   position: relative;
+}
+
+header {
+   position: sticky;
+   display: flex;
+   top: 0;
+   left: 0;
+   right: 0;
+   text-align: center;
+   background: #84c552;
+   height: 50px;
+   margin-bottom: 10px;
+   align-items: center;
+   justify-content: center;
+   z-index: 2;
+   font-weight: 550;
+   font-size: min(5vw, 20px);
+   letter-spacing: 5px;
+   color: white;
+}
+
+section {
+   display: flex;
+   flex-direction: column;
+   width: 70%;
+   margin: auto;
+}
+
+button {
+   margin-bottom: 10px;
+   background: #84c552;
+   border: 0;
+   border-radius: 10px;
+   color: #fff;
+   cursor: pointer;
+   font-size: 1rem;
+   font-weight: 500;
+   padding: 10px;
+   transition: .2s ease;
+   width: min(200px, 35vw);
+   will-change: auto;
+}
+
+span {
+   margin-bottom: 10px;
+   font-weight: 600;
+}
+
+.mainButtons {
+   display: flex;
+   flex-direction: row;
+   width: 100%;
+   justify-content: space-around;
+}
+
+.inputForm {
+   position: relative;
+   display: flex;
+   margin-bottom: 10px;
+   padding: 5px 0 5px 0;
+}
+
+.getDataSection {
+   display: flex;
+   flex-direction: column;
+   max-height: 0;
+   overflow: hidden;
+   transition: max-height 0.3s ease-in-out;
+}
+
+.dataInput {
+   position: absolute;
+   right: 0;
+   width: 60%;
+   border-radius: 5px;
+   border: 1px solid grey;
+   padding: 3px;
+}
+
+#calcButton {
+   margin-bottom: 10px;
+   align-self: center;
+}
+
+/* .installButton {
+   align-self: center;
+} */
+
+
+.accordionDiv {
+   /* border-radius: unset; */
+   cursor: pointer;
+   border: none;
+   outline: none;
+   text-align: left;
+   padding: 18px;
+   width: 100%;
+   transition: 0.5s;
+}
+
+.accordionDiv:after {
+   content: '\02795'; 
+   font-size: 13px;
+   color: #ffffff;
+   border: none;
+   float: right;
+   margin-left: 5px;
+}
+
+.active:after {
+   content: "\2796"; 
+}
+
+.active, #controlGetDataSection:hover, button:hover {
+   background: rgb(122, 122, 122)
+}
+
+@media screen and (max-width: 900px) {
+   section {
+      width: 90%;
+   }
+   .inputForm {
+      flex-direction: column;
+   }
+   .dataInput {
+      position: unset;
+      width: 100%;
+      margin-top: 5px;
+   }
+}
