@@ -1,4 +1,4 @@
-import { startCalculations} from './app.js'
+import { startCalculations } from './app.js'
 
 /**
  * @returns Объём услуг Q
@@ -194,7 +194,7 @@ function getRq(rWithoutRisk = 6, rCB = 10, sumBuisnesRisk = 20) {
  * @param incomeTaxRate ставка налога на прибыль, %
  * @returns Rd, %
  */
-function getRd() {
+function getRd(incomeTaxRate = 20) {
   return mainState.loanPercentage * (1 - incomeTaxRate / 100)
 }
 
@@ -202,7 +202,7 @@ function getRd() {
  * @returns Rg, %
  */
 function getRg() {
-  let ownerCapital = mainState.investmentSize * mainState.shareOfOwnFunds
+  let ownerCapital = mainState.investmentSize * mainState.shareOfOwnFunds / 100
   let equipAndCredPayments = mainState.investmentSize + 100
   let specificCredWeight = getCreditSum() / equipAndCredPayments
   let specificCapitalWeight = ownerCapital / equipAndCredPayments
@@ -214,8 +214,7 @@ function getRg() {
  * @returns GF, кэш-флоу, тыс/квартал
  */
 function getGF() {
-  let q = getQ() * 3
-  return q - (getSumPaymentWithoutAmort() * 3 + getTaxDecreased())
+  return (getQ() - (getSumPaymentWithoutAmort() + getTaxDecreased())) * 3
 }
 
 
@@ -249,7 +248,7 @@ export let resultForms = () => {
     <label for="sumPercentPerQuarter">Сумма процента за кредит </label>
     <input class="dataInput" type="text" value="${getSumPercentPerQuarter()}"disabled/>
   </form>
-  <span>Расчет налога при объекте «доход»:</span>
+  <span><b>Расчет налога при объекте «доход»:</b></span>
   <form class="inputForm">
     <label for="initialTax">Начальная сумма налога (тыс/квартал)</label>
     <input class="dataInput" type="text" value="${getInitialTax()}"disabled/>
@@ -257,6 +256,38 @@ export let resultForms = () => {
   <form class="inputForm">
     <label for="TaxDecreased">Уменьшенная сумма налога (тыс/квартал)</label>
     <input class="dataInput" type="text" name="TaxDecreased" value="${getTaxDecreased()}" disabled/>
+  </form>
+  <span><b>Расчет налога при объекте «доход минус расход»:</b></span>
+  <form class="inputForm">
+    <label for="initialTax">Сумма налога, (тыс/мес)</label>
+    <input class="dataInput" type="text"  pattern="\d+([,\.]\d{1,})?" value="${getSumTaxIncomeOutlay()}"disabled/>
+  </form>
+  <span><b>Величина производственного риска проекта: </b></span>
+  <form class="inputForm">
+    <label for="initialTax">Сумма постоянных затрат (тыс/мес)</label>
+    <input class="dataInput" type="text"  pattern="\d+([,\.]\d{1,})?" value="${getProductionRisk()}"disabled/>
+  </form>
+  <span><b>Величина финансового риска в условиях проекта: </b></span>
+  <form class="inputForm">
+    <label for="initialTax">Величина чистой прибыли, %</label>
+    <input class="dataInput" type="text"  pattern="\d+([,\.]\d{1,})?" value="${getClearProfit()}"disabled/>
+  </form>
+  <span><b>Расчет эффективности и риска проекта: </b></span>
+  <form class="inputForm">
+    <label for="initialTax">Rq, %</label>
+    <input class="dataInput" type="text"  pattern="\d+([,\.]\d{1,})?" value="${getRq()}"disabled/>
+  </form>
+  <form class="inputForm">
+    <label for="initialTax">Rd, %</label>
+    <input class="dataInput" type="text"  pattern="\d+([,\.]\d{1,})?" value="${getRd()}"disabled/>
+  </form>
+  <form class="inputForm">
+    <label for="initialTax">Rg, %</label>
+    <input class="dataInput" type="text"  pattern="\d+([,\.]\d{1,})?" value="${getRg()}"disabled/>
+  </form>
+  <form class="inputForm">
+    <label for="initialTax">GF кэш-флоу, тыс/квартал</label>
+    <input class="dataInput" type="text"  pattern="\d+([,\.]\d{1,})?" value="${getGF()}"disabled/>
   </form>
 `
 } 
